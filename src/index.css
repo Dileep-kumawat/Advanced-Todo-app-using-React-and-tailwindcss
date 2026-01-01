@@ -3,8 +3,21 @@
 
 * {
     font-family: "Roboto", sans-serif;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 .taskMenus {
     transition: all 0.5s ease;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.back {
+    background: linear-gradient(180deg,
+            #F1E4FE 0%,
+            #E6D5FB 40%,
+            #A067EA 100%);
 }

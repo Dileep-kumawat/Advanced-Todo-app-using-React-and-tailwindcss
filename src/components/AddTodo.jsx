@@ -3,7 +3,7 @@ import TaskTypeDropdown from "./TaskTypeDropdown"
 import { todoContext } from '../context/TodoContext'
 
 const AddTodo = ({ createTaskOpened, createTaskOpenedHandler }) => {
-    const { todo, setTodo } = useContext(todoContext);
+    const { todo, setTodo, setFiltered, todoType } = useContext(todoContext);
     const options = [
         { value: "Idea", label: "Idea", icon: "ri-lightbulb-ai-line" },
         { value: "Food", label: "Food", icon: "ri-restaurant-2-line" },
@@ -24,9 +24,27 @@ const AddTodo = ({ createTaskOpened, createTaskOpenedHandler }) => {
             <div className="bg-white rounded-tl-4xl grow p-8">
                 <form onSubmit={(e) => {
                     e.preventDefault();
-                    let oldTodos = todo;
-                    oldTodos.push({ type:selected.value, todoName, todoDesc })
+                    let oldTodos = [...todo];
+                    oldTodos.push({ id: oldTodos.length, type: selected.value, todoName, todoDesc, completed: false })
+                    localStorage.setItem("todo", JSON.stringify(oldTodos));
                     setTodo(oldTodos);
+                    const groupedTodos = {
+                        All: [],
+                        Idea: [],
+                        Food: [],
+                        Work: [],
+                        Music: [],
+                        Sport: [],
+                    };
+
+                    todo.forEach(todo => {
+                        if (groupedTodos[todo.type]) {
+                            groupedTodos[todo.type].push(todo);
+                        }
+                        groupedTodos.All.push(todo);
+                    });
+
+                    setFiltered(groupedTodos[todoType]);
                     setSelected(options[0]);
                     setTodoName("");
                     setTodoDesc("");

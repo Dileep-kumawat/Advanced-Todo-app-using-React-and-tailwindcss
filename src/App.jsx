@@ -3,7 +3,7 @@ import MainContent from "./components/MainContent"
 const App = () => {
   return (
     <div className="h-screen w-full relative">
-      <img className="h-full w-full object-cover object-center brightness-75" src="mainBg.jpg" alt="mainBg" loading="lazy" />
+      <div className="back h-full w-full"></div>
       <MainContent />
     </div>
   )
